@@ -45,7 +45,7 @@ final class CompactAppearanceTests: XCTestCase {
         defaults.set(3, forKey: "RAM_updateInterval")
         CompactAppearanceMigration.apply(to: defaults)
         XCTAssertEqual(defaults.string(forKey: "Network_speed_icon"), "none")
-        XCTAssertEqual(defaults.string(forKey: "CombinedModules_spacing"), "4")
+        XCTAssertEqual(defaults.string(forKey: "CombinedModules_spacing"), "0")
         XCTAssertEqual(defaults.integer(forKey: "RAM_updateInterval"), 3)
         defaults.set("2", forKey: "CombinedModules_spacing")
         CompactAppearanceMigration.apply(to: defaults)

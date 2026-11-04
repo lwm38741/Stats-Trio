@@ -1,8 +1,8 @@
 import Foundation
 
 MainActor.assumeIsolated {
-let equalSpacing = EqualSpacingTests()
-runCase("EqualSpacingTests.testUnequalPaddingBecomesEqualVisibleGaps", equalSpacing.testUnequalPaddingBecomesEqualVisibleGaps)
+let fixedMenu = FixedMenuLayoutTests()
+runCase("FixedMenuLayoutTests.testChangingNumericWidthsKeepsEveryRegionInPlace", fixedMenu.testChangingNumericWidthsKeepsEveryRegionInPlace)
 let compact = CompactAppearanceTests()
 runCase("CompactAppearanceTests.testExistingInstallReceivesCompactDefaultsOnlyOnce", compact.testExistingInstallReceivesCompactDefaultsOnlyOnce)
 let migration = PreferenceMigrationTests()

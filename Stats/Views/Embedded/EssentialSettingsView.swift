@@ -43,7 +43,7 @@ struct EssentialSettingsView: View {
                             .help("向后移动").disabled(model.moduleOrder.last == module)
                     }
                 }
-                Picker("图标间距", selection: stringBinding("CombinedModules_spacing", fallback: "2")) {
+                Picker("额外间距", selection: stringBinding("CombinedModules_spacing", fallback: "0")) {
                     ForEach(["0", "2", "4", "6"], id: \.self) { Text("\($0) 点").tag($0) }
                 }
             }

@@ -26,7 +26,6 @@ final class CombinedView: NSObject {
     private var monitors: [Any] = []
     private var observers: [NSObjectProtocol] = []
     private var isRecalculating = false
-    private var layoutUpdatePending = false
     private var appearanceObservation: NSKeyValueObservation?
     var openSettings: () -> Void = {}
 
@@ -102,20 +101,19 @@ final class CombinedView: NSObject {
         for module in sorted {
             guard let id = Self.id(for: module.name) else { continue }
             let source = module.menuBar.view
-            let view = CroppedMenuContentView(content: source, visibleBounds: MenuContentCropping.visibleBounds(of: source))
+            let view = MenuSlotView(content: source, width: FixedMenuLayout.width(for: id), leadingInset: id == .sensors ? 4 : 2)
             widths.append((id, view.frame.width))
             regionViews[id] = view
             for widget in module.menuBar.widgets where widget.isActive {
-                (widget.item as? WidgetWrapper)?.onContentRendered = { [weak self] in self?.scheduleLayoutUpdate() }
                 widget.item.onClick = { [weak self] in self?.toggle(id) }
                 widget.item.setAccessibilityLabel(module.name)
             }
         }
-        let trioView = CroppedMenuContentView(content: trioButton, visibleBounds: MenuContentCropping.visibleBounds(of: trioButton))
+        let trioView = MenuSlotView(content: trioButton, width: FixedMenuLayout.width(for: .trio), leadingInset: 0)
         widths.append((.trio, trioView.frame.width))
         regionViews[.trio] = trioView
-        let spacing = CGFloat(Int(Store.shared.string(key: "CombinedModules_spacing", defaultValue: "2")) ?? 2)
-        let layout = CombinedLayout(widths: widths, spacing: spacing)
+        let spacing = CGFloat(Int(Store.shared.string(key: "CombinedModules_spacing", defaultValue: "0")) ?? 0)
+        let layout = FixedMenuLayout.layout(items: widths, spacing: spacing)
         group.layout = layout
         for region in layout.regions {
             guard let view = regionViews[region.id] else { continue }
@@ -131,15 +129,6 @@ final class CombinedView: NSObject {
         }
     }
 
-    private func scheduleLayoutUpdate() {
-        guard !isRecalculating, !layoutUpdatePending else { return }
-        layoutUpdatePending = true
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.layoutUpdatePending = false
-            self.recalculate()
-        }
-    }
     func anchor(for id: PanelID) -> PanelAnchor? {
         guard let view = regionViews[id], let window = view.window, let screen = window.screen else { return nil }
         let rect = window.convertToScreen(view.convert(view.bounds, to: nil))
