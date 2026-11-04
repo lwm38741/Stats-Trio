@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Stats Trio</string>
+	<key>CFBundleExecutable</key>
+	<string>StatsTrio</string>
+	<key>CFBundleIconFile</key>
+	<string>StatsTrio.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>local.statstrio.app</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Stats Trio</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.1</string>
+	<key>CFBundleVersion</key>
+	<string>2</string>
+	<key>Description</key>
+	<string>Simple macOS system monitor in your menu bar</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>15.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>This permission allows opening a selected day in the Calendar app</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>显示蓝牙设备、电量并连接所选设备。</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Includes Stats (MIT) and Status Trio (Apache-2.0).</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>读取当前 Wi-Fi 名称和链路信息。</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSUserNotificationAlertStyle</key>
+	<string>alert</string>
+	<key>TeamId</key>
+	<string>local.statstrio</string>
+</dict>
+</plist>
