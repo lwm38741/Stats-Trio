@@ -65,6 +65,22 @@ class StreamMonitor<Value: Sendable> {
 }
 
 Task { @MainActor in
+    let networkLocalization = Localization()
+    let connectedWiFi = WiFiStatus(state: .connected, rssi: -29, ssid: "Office_Test_5G", nameAccess: .authorized, band: .fiveGHz)
+    let baseWiFi = PanelPresentationMapper.network(wifi: connectedWiFi, connection: .wifi, wired: nil,
+        isConstrained: false, isResolvingName: false, localization: networkLocalization)
+    let summary = EmbeddedNetworkSummary.make(base: baseWiFi, wifi: connectedWiFi, connection: .wifi,
+        hardware: TrioSummaryHardware(adapterWatts: 30, linkMbps: 960), localization: networkLocalization)
+    precondition(summary.title == networkLocalization.string(.wifiTitle) + " · Office_Test_5G")
+    precondition(!summary.subtitle.contains(networkLocalization.string(.wifiSubtitleConnected)))
+    precondition(summary.subtitle.contains("-29") && summary.subtitle.contains("5"))
+    precondition(!summary.subtitle.contains("\n") && summary.subtitle.hasSuffix("握手速率 · 960 Mbps"))
+    let deniedName = WiFiStatus(state: .connected, rssi: -50, ssid: "Stale_Test", nameAccess: .denied)
+    let deniedSummary = EmbeddedNetworkSummary.make(base: baseWiFi, wifi: deniedName, connection: .wifi,
+        hardware: nil, localization: networkLocalization)
+    precondition(deniedSummary.title == networkLocalization.string(.wifiTitle))
+    precondition(!deniedSummary.accessibilityLabel.contains("Stale_Test"))
+    print("Wi-Fi summary title, no redundant connected label, full rate and denied-name privacy: PASS")
     // Literal presentation requirements for the compact user-approved style.
     let fullBattery = BatteryStatus(rawPercentage: 100, isPresent: true, isCharging: false, isLowPowerMode: false, isConnectedToPower: true)
     let fullScene = CompactBatteryPresentation.scene(battery: fullBattery)

@@ -6,14 +6,16 @@
 - 网速显示两行数值，无红蓝圆点。
 - 电池充满时显示完整绿环，顶部仅在实际充电时显示闪电。
 - Trio 默认综合面板包含电池、网络、蓝牙设备／电量、音量／输出和输入法。
-- 电池摘要显示电源适配器报告的功率；网络摘要显示当前协商速率。不可读取时明确显示不可用。
+- 电池摘要显示电源适配器报告的功率；Wi-Fi 标题显示当前网络名，频段／信号／握手速率在一行完整展示。不可读取时明确显示不可用。
 - 与原 Stats 使用不同的应用身份和偏好，不覆盖原应用，也不迁入登录项或凭据。
 
 ## 下载和安装
 
-在本仓库 Releases 下载 `Stats-Trio-v0.1.2-macOS-arm64.zip`，解压后把 `Stats Trio.app` 拖入“应用程序”，再打开。
+在本仓库 Releases 下载 `Stats-Trio-v0.1.3-macOS-arm64.zip`，解压后把 `Stats Trio.app` 拖入“应用程序”，再打开。
 
 适用于 Apple Silicon、macOS 15+；已在 M1 / macOS 15.7.7 验证。当前为本地 ad-hoc 签名的预览版，未经 Apple 公证；系统权限和首次运行由 macOS 正常流程处理。重新构建后蓝牙授权可能需要重新确认。没有自动更新。
+
+显示 Wi-Fi 名称需要 macOS 定位授权，可在 Wi-Fi 详情中按系统提示允许；不会因此切换网络。
 
 重新打开应用可进入设置；设置窗口激活后，也可通过“窗口”菜单打开各项详情。仅主动启用“开机启动”时才注册本应用的登录项。
 
@@ -26,6 +28,7 @@ Scripts/build-local.sh
 Scripts/test-local.sh
 Scripts/test-embedded.sh
 Scripts/test-popup.sh
+Scripts/test-wifi-layout.sh
 ```
 
 产物位于 `build/Stats Trio.app`。原上游 Xcode 工程作为来源保留，尚未配置为本应用的发行 scheme。

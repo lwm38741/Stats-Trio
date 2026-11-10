@@ -29,11 +29,13 @@ struct NetworkStatusView: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(state.title)
                             .font(.headline)
-                            .lineLimit(1)
+                            .lineLimit(isWired ? 1 : nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .truncationMode(.tail)
                         subtitle
                     }
-                    Spacer()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .layoutPriority(1)
                     PanelActionGlyph(
                         systemName: "chevron.right",
                         font: .caption.weight(.semibold)
@@ -72,7 +74,8 @@ struct NetworkStatusView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
-                .truncationMode(isWired ? .middle : .tail)
+                .minimumScaleFactor(0.9)
+                .allowsTightening(true)
         }
     }
 

@@ -122,7 +122,8 @@ final class StatusPanelViewModel: ObservableObject {
         battery.appendingSummaryMetadata(store.popupSnapshot.battery.isConnectedToPower ? summaryHardware?.adapterText : nil)
     }
     var embeddedNetworkSummary: PanelSummaryState {
-        network.appendingSummaryMetadata(summaryHardware?.linkText)
+        EmbeddedNetworkSummary.make(base: network, wifi: store.popupSnapshot.wifi,
+            connection: store.popupSnapshot.connection, hardware: summaryHardware, localization: localization)
     }
     func startSummaryHardwareUpdates() {
         stopSummaryHardwareUpdates()
